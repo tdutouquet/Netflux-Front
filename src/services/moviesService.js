@@ -14,5 +14,14 @@ export default {
     },
     getMovie(id) {
         return client.get(`/movies/${id}`);
+    },
+    addMovie(movieData) {
+        return client.post('/movies', movieData);
+    },
+    udpateMovie(id, movieData) {
+        return client.put(`/movies/${id}`, movieData);
+    },
+    deleteMovie(id) {
+        return client.delete(`/movies/${id}`);
     }
 }

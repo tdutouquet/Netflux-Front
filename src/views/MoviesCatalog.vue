@@ -5,11 +5,15 @@
             <div class="row row-gap-3">
                 <div v-for="movie in movies" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
-                        <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" alt="{{ movie.title }}" style="height: 200px;">
+                        <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title"
+                            style="height: 200px;">
                         <div class="card-body">
+                            <span v-for="(categ, index) in movie.categories" :key="index">
+                                <span class="badge text-bg-secondary mb-3 mx-1">{{categ.name}}</span>
+                            </span>
                             <h5 class="card-title">{{ movie.title }}</h5>
                             <p class="card-text">{{ movie.description }}</p>
-                            <a href="#" class="btn btn-primary">Voir la fiche</a>
+                            <router-link :to="'/movies/' + movie.id" class="btn btn-primary">Voir la fiche</router-link>
                         </div>
                     </div>
                 </div>
@@ -20,10 +24,12 @@
 
 <script>
 import moviesService from '@/services/moviesService';
+
 export default {
     data() {
         return {
-            movies: []
+            movies: [],
+            categories: [],
         }
     },
     methods: {
@@ -31,13 +37,14 @@ export default {
             try {
                 const response = await moviesService.getMovies()
                 this.movies = response.data;
-            } catch(error) {
+                // console.log(this.movies);
+            } catch (error) {
                 console.log('Error while fetching movies: ' + error);
             }
         },
         generateImgUrl(movie) {
             return `https://source.unsplash.com/random/?movie&${movie.title}`;
-        }
+        },
     },
     created() {
         this.fetchMovies();
