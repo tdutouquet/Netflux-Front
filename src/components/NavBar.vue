@@ -19,8 +19,14 @@
               Catalogue de films
             </a>
             <ul class="dropdown-menu">
-              <li v-for="category in categories" :key="category.id" >
-                <a class="dropdown-item" href="#">{{category.name}}</a>
+              <li v-for="category in categories" :key="category.id">
+                <router-link :to="'/movies/' + category.id" class="dropdown-item">{{ category.name }}</router-link>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <router-link to="/movies" class="dropdown-item">Tous les films</router-link>
               </li>
             </ul>
           </li>
@@ -53,8 +59,8 @@ export default {
     },
   },
   created() {
-        this.fetchCategories();
-    }
+    this.fetchCategories();
+  }
 }
 </script>
 
