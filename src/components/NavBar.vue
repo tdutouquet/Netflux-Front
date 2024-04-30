@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Netflox</a>
+      <router-link :to="{ name: 'home' }" class="navbar-brand fw-bold">
+        <i class="bi bi-camera-video-fill"></i>
+        Netflox
+      </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,7 +13,7 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">Accueil</router-link>
+            <router-link :to="{ name: 'home' }" class="nav-link">Accueil</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,6 +78,7 @@ export default {
     async logout() {
       try {
         await userService.logout();
+        confirm('Vous êtes déconnecté');
         this.$router.push('/');
       } catch (error) {
         console.log('Erreur pendant la déconnexion : ', error);

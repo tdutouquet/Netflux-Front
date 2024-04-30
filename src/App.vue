@@ -1,14 +1,17 @@
 <template>
   <NavBar />
   <router-view />
+  <FooTer />
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import FooTer from '@/components/FooTer.vue'
 
 export default {
   components: {
     NavBar,
+    FooTer,
   },
 }
 </script>
@@ -21,5 +24,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+main {
+  min-height: 90vh;
 }
 </style>

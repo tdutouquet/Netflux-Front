@@ -1,9 +1,18 @@
 <template>
     <main>
+        <section class="container-fluid p-0">
+            <div class="jumbotron jumbotron-fluid d-flex align-items-center text-center text-white bg-dark p-5" style="background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/random/?movies'); background-size: cover; background-position: center; height: 50vh">
+                <div class="container">
+                    <h1 class="display-4 fw-bold">Netflox</h1>
+                    <p class="lead">Un catalogue de films à déguster avec de déclicieux popcorns !</p>
+                    <router-link :to="{ name: 'register' }" class="btn btn-primary btn-lg p-3 mt-3 fw-bold">Je m'inscris</router-link>
+                </div>
+            </div>
+        </section>
         <div class="container">
-            <h1 class="h1 my-5">Liste des films</h1>
+            <h1 class="h1 my-5 text-center">Un aperçu de notre catalogue</h1>
             <div class="row row-gap-3">
-                <div v-for="movie in movies" :key="movie.id" class="col">
+                <div v-for="movie in movies.slice(0, 3)" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
                         <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title"
                             style="height: 200px;">
@@ -51,5 +60,3 @@ export default {
     }
 }
 </script>
-
-<style></style>

@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 mb-3">{{ movie.title }}</h1>
+            <h1 class="h1 mt-5 mb-3">{{ movie.title }}</h1>
             <div>
                 <span v-for="categ in movie.categories" :key="categ.id" class="badge bg-secondary mb-3 mx-1">{{ categ.name }}</span>
             </div>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import Homepage from '@/views/HomePage.vue'
 import MoviesCatalog from '@/views/MoviesCatalog.vue'
 import MoviesCatalogFiltered from '@/views/MoviesCatalogFiltered.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
@@ -15,7 +16,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: MoviesCatalog
+    component: Homepage
   },
   {
     path: '/movies',
@@ -28,7 +29,7 @@ const routes = [
     component: MoviesCatalogFiltered
   },
   {
-    path: '/movies/:id',
+    path: '/movies/details/:id',
     name: 'movieDetails',
     component: MovieDetails
   },

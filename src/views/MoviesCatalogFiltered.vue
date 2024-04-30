@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Catégorie "{{ categories[0].name }}" ({{ movies.length }})</h1>
+            <h1 class="h1 my-5">Catégorie "{{ categories[0].name }}" ({{ movies.length }} films)</h1>
             <div class="row row-gap-3">
                 <div v-for="movie in movies" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
@@ -13,7 +13,7 @@
                             </span>
                             <h5 class="card-title">{{ movie.title }}</h5>
                             <p class="card-text">{{ movie.description }}</p>
-                            <router-link :to="'/movies/' + movie.id" class="btn btn-primary">Voir la fiche</router-link>
+                            <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }" class="btn btn-primary">Voir la fiche</router-link>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ export default {
                     );
                 }
             } catch (error) {
-                console.log('Error while fetching movies: ' + error);
+                console.log('Erreur pendant la récupération des films : ' + error);
             }
         },
         generateImgUrl(movie) {
@@ -58,11 +58,12 @@ export default {
                 this.categories = response.data;
                 
                 if (id) {
+                    console.log(id)
                     this.categories = this.categories.filter(categ => categ.id === id);
                 }
                 console.log(this.categories);
             } catch (error) {
-                console.log('Error while fetching categories: ' + error);
+                console.log('Erreur pendant la récupération des catégories : ' + error);
             }
         }
     },
