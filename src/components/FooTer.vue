@@ -3,7 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col offset-md-2">
-                    <h3>Netflox</h3>
+                    <h3>
+                        <i class="bi bi-camera-video-fill"></i>
+                        Netflox
+                    </h3>
                 </div>
                 <div class="col footer-links">
                     <ul class="list-unstyled">

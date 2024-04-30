@@ -55,6 +55,7 @@
 <script>
 import categoriesService from '@/services/categoriesService';
 import userService from '@/services/userService';
+import { useToast } from "vue-toastification";
 
 export default {
   name: 'NavBar',
@@ -65,6 +66,10 @@ export default {
       categories: []
     }
   },
+  setup() {
+      const toast = useToast();
+      return { toast }
+    },
   methods: {
     async fetchCategories() {
       try {
@@ -78,8 +83,9 @@ export default {
     async logout() {
       try {
         await userService.logout();
-        confirm('Vous êtes déconnecté');
-        this.$router.push('/');
+        // confirm('Vous êtes déconnecté');
+        this.toast.success("Vous avez bien été déconnecté");
+        this.$router.push({ name: 'home' });
       } catch (error) {
         console.log('Erreur pendant la déconnexion : ', error);
       }

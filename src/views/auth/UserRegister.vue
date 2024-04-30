@@ -34,6 +34,7 @@
 
 <script>
 import userService from '@/services/userService';
+import { useToast } from "vue-toastification";
 
 export default {
     data() {
@@ -46,6 +47,10 @@ export default {
             consent: false,
             errorMessage: '',
         }
+    },
+    setup() {
+        const toast = useToast();
+        return { toast }
     },
     methods: {
         submitRegister() {
@@ -77,8 +82,8 @@ export default {
 
             userService.register(this.newUser)
                 .then(() => {
-                    let message = 'Inscription réussie'
-                    this.$router.push('/login', message)
+                    this.toast.success("Vous êtes inscrit. Vous pouvez désormais vous connecter.");
+                    this.$router.push('/login')
                 })
                 .catch(error => {
                     alert('Une erreur est survenue : ' + error)

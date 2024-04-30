@@ -22,6 +22,7 @@
 
 <script>
 import userService from '@/services/userService';
+import { useToast } from "vue-toastification";
 
 export default {
     data() {
@@ -33,6 +34,10 @@ export default {
             errorMessage: ''
         }
     },
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
     methods: {
         submitLogin() {
             if (this.user.email.length === 0 || this.user.password.length === 0) {
@@ -42,11 +47,11 @@ export default {
 
             userService.login(this.user)
                 .then(() => {
-                    alert('Connexion réussie')
-                    this.$router.push('/')
+                    this.toast.success("Vous êtes désormais connecté");
+                    this.$router.push({ name: 'home' })
                 })
                 .catch(error => {
-                    alert('Une erreur est survenue' + error)
+                    this.toast.error('Une erreur est survenue ' + error);
                     console.log(error)
                 })
         }

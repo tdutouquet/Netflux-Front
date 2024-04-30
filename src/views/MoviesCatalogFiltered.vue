@@ -5,8 +5,9 @@
             <div class="row row-gap-3">
                 <div v-for="movie in movies" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
-                        <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title"
-                            style="height: 200px;">
+                        <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }">
+                            <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title" style="height: 200px;">
+                        </router-link>
                         <div class="card-body">
                             <span v-for="(categ, index) in movie.categories" :key="index">
                                 <span class="badge text-bg-secondary mb-3 mx-1">{{ categ.name }}</span>
