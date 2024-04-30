@@ -4,8 +4,8 @@ import MoviesCatalog from '@/views/MoviesCatalog.vue'
 import MoviesCatalogFiltered from '@/views/MoviesCatalogFiltered.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
 
-import UserRegister from '@/views/user/UserRegister.vue'
-import UserLogin from '@/views/user/UserLogin.vue'
+import UserRegister from '@/views/auth/UserRegister.vue'
+import UserLogin from '@/views/auth/UserLogin.vue'
 
 import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
@@ -33,7 +33,7 @@ const routes = [
     component: MovieDetails
   },
 
-  // User auth
+  // User auth routes
   {
     path: '/register',
     name:'register',

@@ -31,6 +31,11 @@
             </ul>
           </li>
         </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link to="/admin/movies" class="btn btn-primary">Admin</router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
