@@ -1,7 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+
 import MoviesCatalog from '@/views/MoviesCatalog.vue'
 import MoviesCatalogFiltered from '@/views/MoviesCatalogFiltered.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
+
+import UserRegister from '@/views/user/UserRegister.vue'
+import UserLogin from '@/views/user/UserLogin.vue'
+
 import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
 import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
@@ -26,6 +31,18 @@ const routes = [
     path: '/movies/:id',
     name: 'movieDetails',
     component: MovieDetails
+  },
+
+  // User auth
+  {
+    path: '/register',
+    name:'register',
+    component: UserRegister
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: UserLogin
   },
 
   // Admin routes
