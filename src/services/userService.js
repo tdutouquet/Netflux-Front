@@ -9,7 +9,13 @@ const client = axios.create({
 });
 
 export default {
-    getCategories() {
-        return client.get('/categories');
+    register(userData) {
+        return client.post('/register', userData);
     },
+    login(credentials) {
+        return client.post('/login', credentials);
+    },
+    logout() {
+        return client.post('/logout');
+    }
 }

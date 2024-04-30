@@ -7,12 +7,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <router-link to="/" class="nav-link">Accueil</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,9 +29,19 @@
             </ul>
           </li>
         </ul>
+        <!-- Right Side Of Navbar -->
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/admin/movies" class="btn btn-primary">Admin</router-link>
+            <router-link to="/admin/movies" class="btn btn-dark">Admin</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/login" class="btn btn-link">Connexion</router-link>
+          </li>
+          <li class="nav-item">
+            <a @click="logout" class="btn btn-link">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <router-link to="/register" class="btn btn-primary">Inscription</router-link>
           </li>
         </ul>
       </div>
@@ -43,6 +51,8 @@
 
 <script>
 import categoriesService from '@/services/categoriesService';
+import userService from '@/services/userService';
+
 export default {
   name: 'NavBar',
   props: {
@@ -59,9 +69,17 @@ export default {
         this.categories = response.data;
         // console.log(response.data);
       } catch (error) {
-        console.log('Error while fetching categories: ' + error);
+        console.log('Erreur pendant la récupération des catégories : ' + error);
       }
     },
+    async logout() {
+      try {
+        await userService.logout();
+        this.$router.push('/');
+      } catch (error) {
+        console.log('Erreur pendant la déconnexion : ', error);
+      }
+    }
   },
   created() {
     this.fetchCategories();
@@ -69,4 +87,10 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+
+ul:first-child a.router-link-exact-active {
+  color: rgb(10, 116, 238);
+  font-weight: bold;
+}
+</style>
