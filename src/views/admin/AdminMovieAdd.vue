@@ -24,7 +24,7 @@
                     <label for="director">Réalisateur</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select v-model="cat1" class="form-select" id="categories" aria-label="Label categories" required>
+                    <select v-model="cat1" class="form-select" id="category1" aria-label="Label categories" required>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
@@ -32,7 +32,7 @@
                     <label for="categories">Catégorie 1</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select v-model="cat2" class="form-select" id="categories" aria-label="Label categories">
+                    <select v-model="cat2" class="form-select" id="category2" aria-label="Label categories">
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
@@ -49,28 +49,32 @@
 <script>
 import categoriesService from '@/services/categoriesService';
 import moviesService from '@/services/moviesService';
+import { useToast } from "vue-toastification";
 
 export default {
     data() {
         return {
             categories: [],
-            cat1: '',
-            cat2: '',
+            cat1: '2',
+            cat2: '4',
             newMovie: {
-                title: '',
-                description: '',
+                title: 'Exemple de titre',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                 date: 1900,
-                director: '',
+                director: 'Jean Bono',
                 categories: [],
             },
         }
+    },
+    setup() {
+        const toast = useToast();
+        return { toast }
     },
     methods: {
         async fetchCategories() {
             try {
                 const response = await categoriesService.getCategories()
                 this.categories = response.data;
-                // console.log(response.data);
             } catch (error) {
                 console.log('Error while fetching categories: ' + error);
             }
@@ -87,7 +91,8 @@ export default {
                     this.$router.push('/admin/movies');
                 })
                 .catch(error => {
-                    console.log('Error while adding movie: ', error);
+                    this.toast.error('Une erreur est survenue (pas connecté comme admin) : ' + error);
+                    console.log('Erreur lors de l\'ajout du film : ', error);
                 });
         },
         cancelSubmit() {
@@ -100,5 +105,4 @@ export default {
         this.fetchCategories();
     }
 }
-
 </script>

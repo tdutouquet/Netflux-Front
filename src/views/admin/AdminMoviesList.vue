@@ -26,7 +26,7 @@
                                 </span>
                             </td>
                             <td>
-                                <RouterLink to="/admin/movies/edit" class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
+                                <RouterLink :to="{ name: 'adminMovieEdit', params: { id: movie.id } }" class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
                                 <button @click="deleteMovie(movie.id)" class="btn btn-danger btn-sm mx-2 btn-delete">Supprimer</button>
                             </td>
                         </tr>
