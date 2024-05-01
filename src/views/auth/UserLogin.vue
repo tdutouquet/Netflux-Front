@@ -47,6 +47,7 @@ export default {
 
             userService.login(this.user)
                 .then(() => {
+                    this.$store.commit('setUser', this.user.email);
                     this.toast.success("Vous êtes désormais connecté");
                     this.$router.push({ name: 'home' })
                 })

@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Administration - Modifier un film</h1>
+            <h1 class="h1 my-5">Modification du film "{{ newMovie.title }}"</h1>
             <form @submit.prevent="submitMovie">
                 <div class="form-floating mb-3">
                     <input v-model="newMovie.title" type="text" class="form-control" id="title"
@@ -33,6 +33,7 @@
                 </div>
                 <div class="form-floating mb-3">
                     <select v-model="cat2" class="form-select" id="categories" aria-label="Label categories">
+                        <option value="0">Aucune catégorie secondaire</option>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
@@ -56,8 +57,8 @@ export default {
         return {
             movieId: this.$route.params.id,
             categories: [],
-            cat1: '',
-            cat2: '',
+            cat1: 0,
+            cat2: 0,
             newMovie: {
                 title: '',
                 description: '',
@@ -84,6 +85,7 @@ export default {
             moviesService.getMovie(this.movieId)
                 .then(response => {
                     let prevData = response.data;
+
                     this.newMovie.title = prevData.title;
                     this.newMovie.description = prevData.description;
                     this.newMovie.date = prevData.date;
@@ -99,7 +101,7 @@ export default {
         },
         submitMovie() {
             this.newMovie.categories.push(this.cat1);
-            if (this.cat2 && this.cat2 !== this.cat1) {
+            if (this.cat2 !== 0 && this.cat2 !== this.cat1) {
                 this.newMovie.categories.push(this.cat2);
             }
 
@@ -109,7 +111,7 @@ export default {
                     this.$router.push({ name: 'adminMoviesList' });
                 })
                 .catch(error => {
-                    this.toast.error('Une erreur est survenue (pas connecté comme admin) : ' + error);
+                    this.toast.error('Une erreur est survenue : ' + error);
                     console.log('Erreur pendant la mise à jour du film : ', error);
                 });
         },

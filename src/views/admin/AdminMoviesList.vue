@@ -39,12 +39,17 @@
 
 <script>
 import moviesService from '@/services/moviesService';
+import { useToast } from "vue-toastification";
 
 export default {
     data() {
         return {
             movies: [],
         }
+    },
+    setup() {
+        const toast = useToast();
+        return { toast }
     },
     methods: {
         async fetchMovies() {
@@ -62,7 +67,10 @@ export default {
         deleteMovie(id) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce film?")) {
                 moviesService.deleteMovie(id)
-                .then(() => this.fetchMovies())
+                .then(() => {
+                    this.toast.success("Film supprimé.");
+                    this.fetchMovies()
+            })
                 .catch((error) => console.log('Error while deleting movie: ', error));
             }
         }

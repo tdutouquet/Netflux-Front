@@ -34,16 +34,16 @@
         </ul>
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
+          <li v-if="isLoggedIn" class="nav-item">
             <router-link to="/admin/movies" class="btn btn-dark">Admin</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/login" class="btn btn-link">Connexion</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="isLoggedIn" class="nav-item">
             <a @click="logout" class="btn btn-link">Déconnexion</a>
           </li>
-          <li class="nav-item">
+          <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/register" class="btn btn-primary">Inscription</router-link>
           </li>
         </ul>
@@ -56,6 +56,7 @@
 import categoriesService from '@/services/categoriesService';
 import userService from '@/services/userService';
 import { useToast } from "vue-toastification";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'NavBar',
@@ -67,9 +68,9 @@ export default {
     }
   },
   setup() {
-      const toast = useToast();
-      return { toast }
-    },
+    const toast = useToast();
+    return { toast }
+  },
   methods: {
     async fetchCategories() {
       try {
@@ -83,13 +84,16 @@ export default {
     async logout() {
       try {
         await userService.logout();
-        // confirm('Vous êtes déconnecté');
+        this.$store.commit('clearUser');
         this.toast.success("Vous avez bien été déconnecté");
         this.$router.push({ name: 'home' });
       } catch (error) {
         console.log('Erreur pendant la déconnexion : ', error);
       }
     }
+  },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'userEmail'])
   },
   created() {
     this.fetchCategories();
@@ -98,7 +102,6 @@ export default {
 </script>
 
 <style scoped>
-
 ul:first-child a.router-link-exact-active {
   color: rgb(10, 116, 238);
   font-weight: bold;

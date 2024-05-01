@@ -33,6 +33,7 @@
                 </div>
                 <div class="form-floating mb-3">
                     <select v-model="cat2" class="form-select" id="category2" aria-label="Label categories">
+                        <option value="0">Aucune catégorie secondaire</option>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
@@ -55,8 +56,8 @@ export default {
     data() {
         return {
             categories: [],
-            cat1: '2',
-            cat2: '4',
+            cat1: 2,
+            cat2: 4,
             newMovie: {
                 title: 'Exemple de titre',
                 description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -81,18 +82,20 @@ export default {
         },
         submitMovie() {
             this.newMovie.categories.push(this.cat1);
-            if (this.cat2 && this.cat2 !== this.cat1) {
+            if (this.cat2 !== 0 && this.cat2 !== this.cat1) {
                 this.newMovie.categories.push(this.cat2);
             }
             
             moviesService.addMovie(this.newMovie)
                 .then(response => {
                     console.log(response.data);
+                    this.toast.success("Film ajouté avec succès");
                     this.$router.push('/admin/movies');
                 })
                 .catch(error => {
-                    this.toast.error('Une erreur est survenue (pas connecté comme admin) : ' + error);
+                    this.toast.error('Une erreur est survenue : ' + error);
                     console.log('Erreur lors de l\'ajout du film : ', error);
+                    console.log(this.newMovie);
                 });
         },
         cancelSubmit() {
