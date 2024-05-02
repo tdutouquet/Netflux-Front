@@ -11,11 +11,11 @@
                 <div class="row align-items-center my-4 px-3">
                     <h2 class="h4 px-0">Permissions</h2>
                     <div class="col form-check form-switch">
-                        <input v-model="isBanned" class="form-check-input" type="checkbox" role="switch" id="ban">
+                        <input v-model="newUser.isBanned" class="form-check-input" type="checkbox" role="switch" id="ban">
                         <label class="form-check-label" for="ban">Bannir l'utilisateur</label>
                     </div>
                     <div class="col my-4 form-check">
-                        <input v-model="isAdmin" type="checkbox" class="form-check-input" id="admin">
+                        <input v-model="newUser.isAdmin" type="checkbox" class="form-check-input" id="admin">
                         <label class="form-check-label" for="admin">Donner le statut Administrateur</label>
                     </div>
                 </div>
@@ -60,10 +60,11 @@ export default {
                 })
         },
         submitUser() {
-            userService.editUser(this.categId, this.newUser)
+            userService.editUser(this.userId, this.newUser)
                 .then(() => {
-                    this.toast.success("Informations de catégorie mises à jour.");
-                    this.$router.push({ name: 'adminCategoriesList' });
+                    console.log(this.newUser.isBanned)
+                    this.toast.success("Informations de l'utilisateur mises à jour.");
+                    this.$router.push({ name: 'adminUsersList' });
                 })
                 .catch(error => {
                     this.toast.error('Une erreur est survenue : ' + error);

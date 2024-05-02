@@ -87,15 +87,13 @@ export default {
             }
             
             moviesService.addMovie(this.newMovie)
-                .then(response => {
-                    console.log(response.data);
+                .then(() => {
                     this.toast.success("Film ajouté avec succès");
                     this.$router.push('/admin/movies');
                 })
                 .catch(error => {
                     this.toast.error('Une erreur est survenue : ' + error);
                     console.log('Erreur lors de l\'ajout du film : ', error);
-                    console.log(this.newMovie);
                 });
         },
         cancelSubmit() {

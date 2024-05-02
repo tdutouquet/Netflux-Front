@@ -48,30 +48,24 @@ export default {
             try {
                 const response = await userService.login(this.user);
                 const userRoles = response.data.user.roles;
+                const isBanned = response.data.user.isBanned;
 
+                // Handle user status (admin/banned)
                 userRoles.includes('ROLE_ADMIN') && this.$store.commit('setAdmin', true);
+                if (isBanned) {
+                    this.toast.error('Vous êtes banni de ce site.');
+                    return
+                }
+
+                // Log user info
                 this.$store.commit('setUser', this.user.email);
+
                 this.toast.success("Vous êtes désormais connecté");
                 this.$router.push({ name: 'home' })
             } catch (error) {
                 this.toast.error('Une erreur est survenue ' + error);
                 console.log(error)
             }
-            // userService.login(this.user)
-            //     .then(() => {
-            //         const userRoles = response.data.user.roles;
-            //         if (userRoles.includes('ROLE_ADMIN')) {
-            //             this.$store.commit('setAdmin', true);
-            //         }
-
-            //         this.$store.commit('setUser', this.user.email);
-            //         this.toast.success("Vous êtes désormais connecté");
-            //         this.$router.push({ name: 'home' })
-            //     })
-            //     .catch(error => {
-            //         this.toast.error('Une erreur est survenue ' + error);
-            //         console.log(error)
-            //     })
         }
     }
 }

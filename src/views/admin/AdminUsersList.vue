@@ -23,7 +23,7 @@
                                     <span v-if="role == 'ROLE_USER'" class="badge text-bg-secondary me-2">Utilisateur</span>
                                 </span>
                             </td>
-                            <td>{{ user.isBanned ? 'Banni' : 'Autorisé' }}</td>
+                            <td>{{ user.isBanned ? ('🛇 Banni') : '✔ Autorisé' }}</td>
                             <td>
                                 <RouterLink :to="{ name: 'adminUserEdit', params: { id: user.id } }"
                                     class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
