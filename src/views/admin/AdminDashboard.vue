@@ -1,9 +1,9 @@
 <template>
     <main>
         <section class="container">
-            <h1 class="py-5">Panneau d'administration</h1>
+            <h1 class="mt-5 mb-4 fw-bold">Dashboard</h1>
             <AdminNav />
-            <div class="alert alert-light" role="alert">
+            <div class="alert alert-secondary" role="alert">
                 Bienvenue dans votre espace administrateur. Ici, vous pouvez gérer les utilisateurs, les films, catégories de films et les commentaires.
             </div>
             <div class="row">
@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Gérer les catégories</h5>
                             <p class="card-text">Consultez la liste des catégories, modifiez leurs caractéristiques et ajoutez-en de nouvelles.</p>
-                            <RouterLink :to="{ name: 'adminMoviesList' }" class="btn btn-primary">Consulter</RouterLink>
+                            <RouterLink :to="{ name: 'adminCategoriesList' }" class="btn btn-primary">Consulter</RouterLink>
                         </div>
                     </div>
                 </div>

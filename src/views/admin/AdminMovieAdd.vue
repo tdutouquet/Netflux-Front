@@ -77,7 +77,7 @@ export default {
                 const response = await categoriesService.getCategories()
                 this.categories = response.data;
             } catch (error) {
-                console.log('Error while fetching categories: ' + error);
+                console.log('Erreur pendant la récupération des catégories : ' + error);
             }
         },
         submitMovie() {

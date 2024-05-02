@@ -12,6 +12,9 @@ import AdminDashboard from '@/views/admin/AdminDashboard.vue'
 import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
 import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
+import AdminCategoriesList from '@/views/admin/AdminCategoriesList.vue'
+import AdminCategoryAdd from '@/views/admin/AdminCategoryAdd.vue'
+import AdminCategoryEdit from '@/views/admin/AdminCategoryEdit.vue'
 
 import { useToast } from "vue-toastification";
 
@@ -91,6 +94,21 @@ const routes = [
         path: 'movies/edit/:id',
         name: 'adminMovieEdit',
         component: AdminMovieEdit
+      },
+      {
+        path: 'categories',
+        name: 'adminCategoriesList',
+        component: AdminCategoriesList
+      },
+      {
+        path: 'categories/add',
+        name: 'adminCategoryAdd',
+        component: AdminCategoryAdd
+      },
+      {
+        path: 'categories/edit/:id',
+        name: 'adminCategoryEdit',
+        component: AdminCategoryEdit
       }
     ]
   }

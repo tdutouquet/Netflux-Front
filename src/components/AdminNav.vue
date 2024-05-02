@@ -5,20 +5,35 @@ import { RouterLink } from 'vue-router';
     <nav class="mb-4">
         <ul class="nav">
             <li class="nav-item">
-                <router-link :to="{ name: 'adminDashboard' }" class="nav-link active"
-                    aria-current="page">Dashboard</router-link>
+                <router-link :to="{ name: 'adminDashboard' }" class="nav-link text-dark"
+                    aria-current="page">
+                    <i class="bi bi-speedometer2"></i>
+                    Dashboard
+                </router-link>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link">Utilisateurs</RouterLink>
+                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link text-dark">
+                    <i class="bi bi-people"></i>
+                    Utilisateurs
+                </RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminMoviesList' }" class="nav-link">Films</RouterLink>
+                <RouterLink :to="{ name: 'adminMoviesList' }" class="nav-link text-dark">
+                    <i class="bi bi-film"></i>
+                    Films
+                </RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link">Catégories</RouterLink>
+                <RouterLink :to="{ name: 'adminCategoriesList' }" class="nav-link text-dark">
+                    <i class="bi bi-tags"></i>
+                    Catégories
+                </RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link">Catégories</RouterLink>
+                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link text-dark">
+                    <i class="bi bi-chat-dots"></i>
+                    Commentaires
+                </RouterLink>
             </li>
         </ul>
     </nav>
@@ -26,7 +41,7 @@ import { RouterLink } from 'vue-router';
 
 <style scoped>
 a.router-link-exact-active {
-    color: var(--clr-primary);
+    color: var(--clr-primary) !important;
     font-weight: bold;
     border-bottom: 2px solid var(--clr-primary);
 }
