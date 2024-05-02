@@ -1,9 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg text-bg-dark">
     <div class="container-fluid">
-      <router-link :to="{ name: 'home' }" class="navbar-brand fw-bold">
+      <router-link :to="{ name: 'home' }" class="navbar-brand fw-bold" style="color: var(--clr-primary)">
         <i class="bi bi-camera-video-fill"></i>
-        Netflox
+        {{ siteName }}
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,10 +13,10 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link :to="{ name: 'home' }" class="nav-link">Accueil</router-link>
+            <router-link :to="{ name: 'home' }" class="nav-link text-bg-dark">Accueil</router-link>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-bg-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Catalogue de films
             </a>
             <ul class="dropdown-menu">
@@ -38,13 +38,13 @@
             <span>{{ userEmail }}</span>
           </li>
           <li v-if="isLoggedIn && this.$store.state.isAdmin" class="nav-item">
-            <router-link to="/admin/movies" class="btn btn-dark">Admin</router-link>
+            <router-link to="/admin/movies" class="btn btn-secondary">Admin</router-link>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
-            <router-link to="/login" class="btn btn-link">Connexion</router-link>
+            <router-link to="/login" class="btn btn-link text-decoration-none">Connexion</router-link>
           </li>
           <li v-if="isLoggedIn" class="nav-item">
-            <a @click="logout" class="btn btn-link">Déconnexion</a>
+            <a @click="logout" class="btn btn-link text-decoration-none">Déconnexion</a>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/register" class="btn btn-primary">Inscription</router-link>
@@ -97,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'userEmail'])
+    ...mapGetters(['siteName', 'isLoggedIn', 'userEmail'])
   },
   created() {
     this.fetchCategories();
@@ -107,7 +107,7 @@ export default {
 
 <style scoped>
 ul:first-child a.router-link-exact-active {
-  color: rgb(10, 116, 238);
+  color: var(--clr-primary);
   font-weight: bold;
 }
 </style>

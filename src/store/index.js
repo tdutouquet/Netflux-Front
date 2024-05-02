@@ -2,10 +2,12 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    siteName: 'Netflux',
     userEmail: localStorage.getItem('userEmail') ?? null,
     isAdmin: localStorage.getItem('isAdmin') ?? null,
   },
   getters: {
+    siteName: state => state.siteName,
     userEmail: state => state.userEmail,
     isLoggedIn: state => !!state.userEmail,
     isAdmin: state => state.isAdmin,

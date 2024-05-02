@@ -1,10 +1,12 @@
-# ecf-vue-api
+# Netflux (front) documentation
 
 ## Admin access
 
-An admin account is required to access the administration panel and add/update/delete data.
+An admin account is required to access the administration panel at `/admin`. 
 
-If Symfony fixtures have been injected into the database, the administrator account is automatically created with the following login and password:
+If you are not an admin, you can still access the API and use the public endpoints, but you are blocked from adding/editing/deleting data. Technically, you should not even be able to access the administration panel if you're not logged in as admin: every access is conditionnaly removed and there is a navigation guard that prevents you from accessing it by typing the URL manually.
+
+Fortunately, if Symfony fixtures have been injected into the database, the administrator account is automatically created with the following login and password:
 * Login : admin@localhost.com
 * Pass : admin
 

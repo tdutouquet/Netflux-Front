@@ -26,6 +26,10 @@ export default {
   color: #2c3e50;
 }
 
+:root {
+  --clr-primary: rgb(10, 116, 238);
+}
+
 main {
   min-height: 90vh;
 }

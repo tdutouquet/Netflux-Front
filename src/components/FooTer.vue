@@ -5,7 +5,7 @@
                 <div class="col offset-md-2">
                     <h3>
                         <i class="bi bi-camera-video-fill"></i>
-                        Netflox
+                        {{ siteName }}
                     </h3>
                 </div>
                 <div class="col footer-links">
@@ -29,4 +29,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+export default {
+    data() {
+        return {
+        }
+    },
+    computed: {
+        ...mapGetters(['siteName'])
+    }
+}
 </script>
