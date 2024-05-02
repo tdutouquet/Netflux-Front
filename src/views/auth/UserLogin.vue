@@ -39,22 +39,39 @@ export default {
         return { toast }
     },
     methods: {
-        submitLogin() {
+        async submitLogin() {
             if (this.user.email.length === 0 || this.user.password.length === 0) {
                 this.errorMessage = 'Veuillez renseigner tous les champs pour vous connecter.'
                 return
             }
 
-            userService.login(this.user)
-                .then(() => {
-                    this.$store.commit('setUser', this.user.email);
-                    this.toast.success("Vous êtes désormais connecté");
-                    this.$router.push({ name: 'home' })
-                })
-                .catch(error => {
-                    this.toast.error('Une erreur est survenue ' + error);
-                    console.log(error)
-                })
+            try {
+                const response = await userService.login(this.user);
+                const userRoles = response.data.user.roles;
+
+                userRoles.includes('ROLE_ADMIN') && this.$store.commit('setAdmin', true);
+                this.$store.commit('setUser', this.user.email);
+                this.toast.success("Vous êtes désormais connecté");
+                this.$router.push({ name: 'home' })
+            } catch (error) {
+                this.toast.error('Une erreur est survenue ' + error);
+                console.log(error)
+            }
+            // userService.login(this.user)
+            //     .then(() => {
+            //         const userRoles = response.data.user.roles;
+            //         if (userRoles.includes('ROLE_ADMIN')) {
+            //             this.$store.commit('setAdmin', true);
+            //         }
+
+            //         this.$store.commit('setUser', this.user.email);
+            //         this.toast.success("Vous êtes désormais connecté");
+            //         this.$router.push({ name: 'home' })
+            //     })
+            //     .catch(error => {
+            //         this.toast.error('Une erreur est survenue ' + error);
+            //         console.log(error)
+            //     })
         }
     }
 }

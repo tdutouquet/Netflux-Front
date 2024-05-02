@@ -5,7 +5,7 @@
             <div class="mb-4">
                 <router-link to="/admin/movies/add" class="btn btn-primary">Ajouter un film</router-link>
             </div>
-            <div>
+            <section>
                 <table class="table table-striped table-hover align-middle">
                     <thead>
                         <tr>
@@ -32,7 +32,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </section>
         </div>
     </main>
 </template>

@@ -12,26 +12,45 @@ import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
 import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
 
+import { useToast } from "vue-toastification";
+
+function requireAdmin(to, from, next) {
+  if (localStorage.getItem('isAdmin')!== 'true') {
+    useToast().error('Vous devez être administrateur pour accéder à cette page')
+    next({ name: 'home' })
+  } else {
+    next()
+  }
+}
+
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Homepage
   },
+
+  // Movies routes
   {
     path: '/movies',
-    name: 'moviesCatalog',
-    component: MoviesCatalog
-  },
-  {
-    path: '/movies/:id',
-    name: 'moviesCatalogFiltered',
-    component: MoviesCatalogFiltered
-  },
-  {
-    path: '/movies/details/:id',
-    name: 'movieDetails',
-    component: MovieDetails
+
+    children: [
+      {
+        path: '',
+        name: 'moviesCatalog',
+        component: MoviesCatalog,
+      },
+      {
+        path: 'category/:id',
+        name: 'moviesCatalogFiltered',
+        component: MoviesCatalogFiltered
+      },
+      {
+        path: 'details/:id',
+        name: 'movieDetails',
+        component: MovieDetails
+      }
+    ]
   },
 
   // User auth routes
@@ -48,20 +67,32 @@ const routes = [
 
   // Admin routes
   {
-    path: '/admin/movies',
-    name: 'adminMoviesList',
-    component: AdminMoviesList
-  },
-  {
-    path: '/admin/movies/add',
-    name: 'adminMovieAdd',
-    component: AdminMovieAdd
-  },
-  {
-    path: '/admin/movies/edit/:id',
-    name: 'adminMovieEdit',
-    component: AdminMovieEdit
-  },
+    path: '/admin',
+    beforeEnter: requireAdmin,
+
+    children: [
+      {
+        path: '',
+        name: 'adminDashboard',
+        component: Homepage
+      },
+      {
+        path: 'movies',
+        name: 'adminMoviesList',
+        component: AdminMoviesList
+      },
+      {
+        path: 'movies/add',
+        name: 'adminMovieAdd',
+        component: AdminMovieAdd
+      },
+      {
+        path: 'movies/edit/:id',
+        name: 'adminMovieEdit',
+        component: AdminMovieEdit
+      }
+    ]
+  }
 ]
 
 const router = createRouter({

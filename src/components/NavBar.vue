@@ -21,7 +21,7 @@
             </a>
             <ul class="dropdown-menu">
               <li v-for="category in categories" :key="category.id">
-                <router-link :to="'/movies/' + category.id" class="dropdown-item">{{ category.name }}</router-link>
+                <router-link :to="{ name: 'moviesCatalogFiltered', params: { id: category.id }}" class="dropdown-item">{{ category.name }}</router-link>
               </li>
               <li>
                 <hr class="dropdown-divider">
@@ -34,7 +34,10 @@
         </ul>
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li v-if="isLoggedIn" class="nav-item">
+          <li v-if="isLoggedIn" class="nav-item d-flex align-items-center me-3">
+            <span>{{ userEmail }}</span>
+          </li>
+          <li v-if="isLoggedIn && this.$store.state.isAdmin" class="nav-item">
             <router-link to="/admin/movies" class="btn btn-dark">Admin</router-link>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
@@ -85,6 +88,7 @@ export default {
       try {
         await userService.logout();
         this.$store.commit('clearUser');
+        this.$store.commit('clearAdmin');
         this.toast.success("Vous avez bien été déconnecté");
         this.$router.push({ name: 'home' });
       } catch (error) {
