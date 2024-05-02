@@ -8,6 +8,7 @@ import MovieDetails from '@/views/MovieDetails.vue'
 import UserRegister from '@/views/auth/UserRegister.vue'
 import UserLogin from '@/views/auth/UserLogin.vue'
 
+import AdminDashboard from '@/views/admin/AdminDashboard.vue'
 import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
 import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
@@ -74,7 +75,7 @@ const routes = [
       {
         path: '',
         name: 'adminDashboard',
-        component: Homepage
+        component: AdminDashboard
       },
       {
         path: 'movies',

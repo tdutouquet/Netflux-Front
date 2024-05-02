@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col offset-md-2">
-                    <h3>
+                    <h3 style="color: var(--clr-primary)">
                         <i class="bi bi-camera-video-fill"></i>
                         {{ siteName }}
                     </h3>

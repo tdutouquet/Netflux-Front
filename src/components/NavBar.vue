@@ -38,7 +38,7 @@
             <span>{{ userEmail }}</span>
           </li>
           <li v-if="isLoggedIn && this.$store.state.isAdmin" class="nav-item">
-            <router-link to="/admin/movies" class="btn btn-secondary">Admin</router-link>
+            <router-link :to="{ name: 'adminDashboard' }" class="btn btn-secondary">Admin</router-link>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/login" class="btn btn-link text-decoration-none">Connexion</router-link>

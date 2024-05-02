@@ -2,6 +2,7 @@
     <main>
         <div class="container">
             <h1 class="h1 my-5">Administration - Gestion des films</h1>
+            <AdminNav />
             <div class="mb-4">
                 <router-link to="/admin/movies/add" class="btn btn-primary">Ajouter un film</router-link>
             </div>
@@ -38,10 +39,14 @@
 </template>
 
 <script>
+import AdminNav from '@/components/AdminNav';
 import moviesService from '@/services/moviesService';
 import { useToast } from "vue-toastification";
 
 export default {
+    components: {
+        AdminNav
+    },
     data() {
         return {
             movies: [],
@@ -80,5 +85,3 @@ export default {
     }
 }
 </script>
-
-<style></style>
