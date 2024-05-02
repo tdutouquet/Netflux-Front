@@ -10,6 +10,7 @@ const client = axios.create({
 });
 
 export default {
+    // Auth
     register(userData) {
         return client.post('/register', userData);
     },
@@ -18,5 +19,19 @@ export default {
     },
     logout() {
         return client.post('/logout');
+    },
+
+    // User management
+    getUsers() {
+        return client.get('/users');
+    },
+    getUser(id) {
+        return client.get(`/users/${id}`);
+    },
+    editUser(id, userData) {
+        return client.put(`/users/${id}`, userData);
+    },
+    deleteUser(id) {
+        return client.delete(`/users/${id}`);
     }
 }

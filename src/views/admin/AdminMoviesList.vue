@@ -1,8 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Administration - Gestion des films</h1>
-            <AdminNav />
+            <AdminNav sectionTitle="Gestion des films" />
             <div class="mb-4">
                 <router-link to="/admin/movies/add" class="btn btn-primary">Ajouter un film</router-link>
             </div>

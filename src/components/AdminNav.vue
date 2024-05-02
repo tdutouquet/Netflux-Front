@@ -1,7 +1,5 @@
-import { RouterLink } from 'vue-router';
-
-import { RouterLink } from 'vue-router';
 <template>
+    <h1 class="mt-5 mb-4 fw-bold">Admin - {{ sectionTitle }}</h1>
     <nav class="mb-4">
         <ul class="nav">
             <li class="nav-item">
@@ -12,7 +10,7 @@ import { RouterLink } from 'vue-router';
                 </router-link>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link text-dark">
+                <RouterLink :to="{ name: 'adminUsersList' }" class="nav-link text-dark">
                     <i class="bi bi-people"></i>
                     Utilisateurs
                 </RouterLink>
@@ -38,6 +36,18 @@ import { RouterLink } from 'vue-router';
         </ul>
     </nav>
 </template>
+
+<script>
+export default {
+    props: {
+        sectionTitle: {
+            type: String,
+            default: ''
+        }
+    },
+}
+
+</script>
 
 <style scoped>
 a.router-link-exact-active {

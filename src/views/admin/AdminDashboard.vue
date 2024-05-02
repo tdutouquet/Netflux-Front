@@ -1,8 +1,7 @@
 <template>
     <main>
         <section class="container">
-            <h1 class="mt-5 mb-4 fw-bold">Dashboard</h1>
-            <AdminNav />
+            <AdminNav sectionTitle="Dashboard" />
             <div class="alert alert-secondary" role="alert">
                 Bienvenue dans votre espace administrateur. Ici, vous pouvez gérer les utilisateurs, les films, catégories de films et les commentaires.
             </div>
@@ -13,7 +12,7 @@
                             <h5 class="card-title fw-bold">Gestion des utilisateurs</h5>
                             <p class="card-text">Consultez la liste des utilisateurs inscrits, leurs informations
                                 personnelles et modifiez leurs autorisations.</p>
-                            <a href="" class="btn btn-primary">Consulter</a>
+                            <RouterLink :to="{ name: 'adminUsersList' }" class="btn btn-primary">Consulter</RouterLink>
                         </div>
                     </div>
                 </div>

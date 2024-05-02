@@ -1,10 +1,10 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Administration - Gestion des films</h1>
-            <AdminNav />
+            <AdminNav sectionTitle="Gestion des catégories" />
             <div class="mb-4">
-                <router-link :to="{ name: 'adminCategoryAdd' }" class="btn btn-primary">Ajouter une catégorie</router-link>
+                <router-link :to="{ name: 'adminCategoryAdd' }" class="btn btn-primary">Ajouter une
+                    catégorie</router-link>
             </div>
             <section>
                 <table class="table table-striped table-hover align-middle">
@@ -20,8 +20,10 @@
                             <th scope="row">{{ category.id }}</th>
                             <td>{{ category.name }}</td>
                             <td>
-                                <RouterLink :to="{ name: 'adminCategoryEdit', params: { id: category.id } }" class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
-                                <button @click="deleteCategory(category.id)" class="btn btn-danger btn-sm mx-2 btn-delete">Supprimer</button>
+                                <RouterLink :to="{ name: 'adminCategoryEdit', params: { id: category.id } }"
+                                    class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
+                                <button @click="deleteCategory(category.id)"
+                                    class="btn btn-danger btn-sm mx-2 btn-delete">Supprimer</button>
                             </td>
                         </tr>
                     </tbody>
@@ -61,14 +63,14 @@ export default {
         deleteCategory(id) {
             if (confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
                 categoriesService.deleteCategory(id)
-                .then(() => {
-                    this.toast.success("Catégorie supprimée");
-                    this.fetchCategories()
-            })
-                .catch((error) => {
-                    this.toast.error('Une erreur est survenue : ' + error);
-                    console.log('Erreur pendant la suppression de la catégorie : ' + error);
-                })
+                    .then(() => {
+                        this.toast.success("Catégorie supprimée");
+                        this.fetchCategories()
+                    })
+                    .catch((error) => {
+                        this.toast.error('Une erreur est survenue : ' + error);
+                        console.log('Erreur pendant la suppression de la catégorie : ' + error);
+                    })
             }
         }
     },

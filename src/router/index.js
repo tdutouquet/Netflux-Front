@@ -9,6 +9,8 @@ import UserRegister from '@/views/auth/UserRegister.vue'
 import UserLogin from '@/views/auth/UserLogin.vue'
 
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
+import AdminUsersList from '@/views/admin/AdminUsersList.vue'
+import AdminUserEdit from '@/views/admin/AdminUserEdit.vue'
 import AdminMoviesList from '@/views/admin/AdminMoviesList.vue'
 import AdminMovieAdd from '@/views/admin/AdminMovieAdd.vue'
 import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
@@ -79,6 +81,16 @@ const routes = [
         path: '',
         name: 'adminDashboard',
         component: AdminDashboard
+      },
+      {
+        path: 'users',
+        name: 'adminUsersList',
+        component: AdminUsersList
+      },
+      {
+        path: 'users/edit/:id',
+        name: 'adminUserEdit',
+        component: AdminUserEdit
       },
       {
         path: 'movies',
