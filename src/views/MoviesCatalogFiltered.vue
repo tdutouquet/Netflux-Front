@@ -59,7 +59,6 @@ export default {
                 this.categories = response.data;
                 
                 if (id) {
-                    console.log(id)
                     this.categories = this.categories.filter(categ => categ.id === id);
                 }
                 console.log(this.categories);

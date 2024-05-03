@@ -47,8 +47,9 @@ export default {
 
             try {
                 const response = await userService.login(this.user);
-                const userRoles = response.data.user.roles;
-                const isBanned = response.data.user.isBanned;
+                console.log(response.data);
+                const userRoles = response.data.roles;
+                const isBanned = response.data.isBanned;
 
                 // Handle user status (admin/banned)
                 userRoles.includes('ROLE_ADMIN') && this.$store.commit('setAdmin', true);

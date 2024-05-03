@@ -43,8 +43,7 @@ export default {
         },
         submitCategory() {
             categoriesService.addCategory(this.newCat)
-                .then(response => {
-                    console.log(response.data);
+                .then(() => {
                     this.toast.success("Catégorie ajoutée avec succès");
                     this.$router.push({ name: 'adminCategoriesList' });
                 })

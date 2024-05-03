@@ -41,10 +41,10 @@
             <router-link :to="{ name: 'adminDashboard' }" class="btn btn-secondary">Admin</router-link>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
-            <router-link to="/login" class="btn btn-link text-decoration-none">Connexion</router-link>
+            <router-link to="/login" class="btn btn-link text-decoration-none text-light">Connexion</router-link>
           </li>
           <li v-if="isLoggedIn" class="nav-item">
-            <a @click="logout" class="btn btn-link text-decoration-none">Déconnexion</a>
+            <a @click="logout" class="btn btn-link text-decoration-none text-light">Déconnexion</a>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/register" class="btn btn-primary">Inscription</router-link>
@@ -94,13 +94,21 @@ export default {
       } catch (error) {
         console.log('Erreur pendant la déconnexion : ', error);
       }
+    },
+    checkCookie() {
+      const cookie = document.cookie.includes('BEARER');
+      if (!cookie) {
+        this.toast.warning('Votre session a expiré, veuillez vous reconnecter');
+        this.logout();
+      }
     }
   },
   computed: {
-    ...mapGetters(['siteName', 'isLoggedIn', 'userEmail'])
+    ...mapGetters(['siteName', 'isLoggedIn', 'userEmail']),
   },
   created() {
     this.fetchCategories();
+    this.checkCookie;
   }
 }
 </script>
