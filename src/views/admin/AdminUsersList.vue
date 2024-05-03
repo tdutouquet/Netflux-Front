@@ -2,6 +2,10 @@
     <main>
         <div class="container">
             <AdminNav sectionTitle="Gestion des utilisateurs" />
+            <form @submit.prevent="" class="mb-4">
+                <label for="catalog-search" class="me-2">Filtrer par adresse :</label>
+                <input v-model="searchQuery" id="catalog-search" name="search" type="search" placeholder="Email de l'utilisateur" class="form-control w-50" style="display: inline-block;" />
+            </form>
             <section>
                 <table class="table table-striped table-hover align-middle">
                     <thead>
@@ -14,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in users" :key="user.id">
+                        <tr v-for="user in filteredUsers" :key="user.id">
                             <th scope="row">{{ user.id }}</th>
                             <td>{{ user.email }}</td>
                             <td>
@@ -50,6 +54,7 @@ export default {
     data() {
         return {
             users: [],
+            searchQuery: '',
         }
     },
     setup() {
@@ -77,6 +82,15 @@ export default {
                         console.log('Erreur pendant la suppression de l\'utilisateur : ' + error);
                     })
             }
+        }
+    },
+    computed: {
+        filteredUsers() {
+            this.searchQuery ?? this.users;
+            let query = this.searchQuery.toLowerCase();
+            return this.users.filter(user => {
+                return user.email.toLowerCase().includes(query)
+            })
         }
     },
     created() {

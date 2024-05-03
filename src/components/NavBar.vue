@@ -97,6 +97,7 @@ export default {
     },
     checkCookie() {
       const cookie = document.cookie.includes('BEARER');
+      console.log('Checked cookie')
       if (!cookie) {
         this.toast.warning('Votre session a expiré, veuillez vous reconnecter');
         this.logout();

@@ -2,6 +2,10 @@
     <main>
         <div class="container">
             <AdminNav sectionTitle="Gestion des films" />
+            <form @submit.prevent="" class="mb-4">
+                <label for="catalog-search" class="me-2">Filtrer par contenu :</label>
+                <input v-model="searchQuery" id="catalog-search" name="search" type="search" placeholder="Recherche" class="form-control w-50" style="display: inline-block;" />
+            </form>
             <div class="mb-4">
                 <router-link to="/admin/movies/add" class="btn btn-primary">Ajouter un film</router-link>
             </div>
@@ -16,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="movie in movies" :key="movie.id">
+                        <tr v-for="movie in filteredMovies" :key="movie.id">
                             <th scope="row">{{ movie.id }}</th>
                             <td>{{ movie.title }}</td>
                             <td>
@@ -49,6 +53,7 @@ export default {
     data() {
         return {
             movies: [],
+            searchQuery: ''
         }
     },
     setup() {
@@ -77,6 +82,15 @@ export default {
             })
                 .catch((error) => console.log('Error while deleting movie: ', error));
             }
+        }
+    },
+    computed: {
+        filteredMovies() {
+            this.searchQuery ?? this.movies;
+            let query = this.searchQuery.toLowerCase();
+            return this.movies.filter(movie => {
+                return movie.title.toLowerCase().includes(query)
+            })
         }
     },
     created() {

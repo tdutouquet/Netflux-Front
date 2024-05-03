@@ -2,6 +2,10 @@
     <main>
         <div class="container">
             <AdminNav sectionTitle="Gestion des commentaires" />
+            <form @submit.prevent="" class="mb-4">
+                <label for="catalog-search" class="me-2">Filtrer par contenu :</label>
+                <input v-model="searchQuery" id="catalog-search" name="search" type="search" placeholder="Recherche" class="form-control w-50" style="display: inline-block;" />
+            </form>
             <section>
                 <table class="table table-striped table-hover align-middle">
                     <thead>
@@ -15,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="comment in comments" :key="comment.id">
+                        <tr v-for="comment in filteredComments" :key="comment.id">
                             <th scope="row">{{ comment.id }}</th>
                             <td>{{ formatDate(comment.createdAt) }}</td>
                             <td>{{ comment.user.email }}</td>
@@ -45,6 +49,7 @@ export default {
     data() {
         return {
             comments: [],
+            searchQuery: ''
         }
     },
     setup() {
@@ -76,6 +81,15 @@ export default {
         formatDate(timestamp) {
             const date = new Date(timestamp);
             return date.toLocaleString();
+        }
+    },
+    computed: {
+        filteredComments() {
+            this.searchQuery ?? this.comments;
+            let query = this.searchQuery.toLowerCase();
+            return this.comments.filter(comment => {
+                return comment.content.toLowerCase().includes(query)
+            })
         }
     },
     created() {
