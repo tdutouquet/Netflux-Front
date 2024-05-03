@@ -47,7 +47,6 @@ export default {
 
             try {
                 const response = await userService.login(this.user);
-                console.log(response.data);
                 const userRoles = response.data.roles;
                 const isBanned = response.data.isBanned;
 

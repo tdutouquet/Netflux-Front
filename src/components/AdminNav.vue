@@ -28,7 +28,7 @@
                 </RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'adminDashboard' }" class="nav-link text-dark">
+                <RouterLink :to="{ name: 'adminCommentsList' }" class="nav-link text-dark">
                     <i class="bi bi-chat-dots"></i>
                     Commentaires
                 </RouterLink>

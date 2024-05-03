@@ -19,17 +19,20 @@
             <section>
                 <h2 class="fw-bold">Avis ({{ numberOfComments }})</h2>
                 <h3 class="h4 mt-4 mb-3">Ajouter un commentaire</h3>
-                <form @submit.prevent="submitComment">
-                    <div class="form-floating">
-                        <textarea v-model="newComment.content" class="form-control" placeholder="Laissez un commentaire" id="comment"
-                            style="height: 100px"></textarea>
-                        <label for="comment">Contenu</label>
+                <form v-if="isLoggedIn" @submit.prevent="submitComment">
+                    <div>
+                        <textarea v-model="newComment.content" class="form-control" placeholder="Laissez un commentaire"
+                            id="comment" maxlength="500" style="height: 100px"></textarea>
+                        <label for="comment"></label>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
+                <p v-else>
+                    <RouterLink :to="{ name: login }">Connectez-vous</RouterLink> pour pouvoir ajouter un commentaire.
+                </p>
                 <h3 class="h4 mt-5 mb-3">Commentaires d'autres utilisateurs</h3>
-                <div v-for="comment in movie.comments" :key="comment.id" class="card p-3 mb-3">
-                    <h4 class="h5">Commentaire de {{ truncate(comment.user.email) }}</h4>
+                <div v-for="comment in movie.comments" :key="comment.id" class="card p-3 mb-3 bg-light">
+                    <h4 class="h5">Commentaire de "{{ truncate(comment.user.email) }}"</h4>
                     <p>{{ comment.content }}</p>
                 </div>
             </section>
@@ -41,6 +44,7 @@
 import moviesService from '@/services/moviesService';
 import commentsService from '@/services/commentsService';
 import { useToast } from "vue-toastification";
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -90,6 +94,9 @@ export default {
         truncate(email) {
             return email.split('@')[0];
         }
+    },
+    computed: {
+        ...mapGetters(['isLoggedIn', 'userEmail']),
     },
     created() {
         this.movieId = parseInt(this.$route.params.id);

@@ -17,6 +17,7 @@ import AdminMovieEdit from '@/views/admin/AdminMovieEdit.vue'
 import AdminCategoriesList from '@/views/admin/AdminCategoriesList.vue'
 import AdminCategoryAdd from '@/views/admin/AdminCategoryAdd.vue'
 import AdminCategoryEdit from '@/views/admin/AdminCategoryEdit.vue'
+import AdminCommentsList from '@/views/admin/AdminCommentsList.vue'
 
 import { useToast } from "vue-toastification";
 
@@ -121,6 +122,11 @@ const routes = [
         path: 'categories/edit/:id',
         name: 'adminCategoryEdit',
         component: AdminCategoryEdit
+      },
+      {
+        path: 'comments',
+        name: 'adminCommentsList',
+        component: AdminCommentsList
       }
     ]
   }
