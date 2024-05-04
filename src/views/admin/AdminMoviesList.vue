@@ -69,7 +69,6 @@ export default {
             try {
                 const response = await moviesService.getMovies()
                 this.movies = response.data;
-                console.log(this.movies);
             } catch (error) {
                 console.log('Error while fetching movies: ' + error);
             }

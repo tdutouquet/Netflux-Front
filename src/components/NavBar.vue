@@ -57,7 +57,7 @@
 
 <script>
 import categoriesService from '@/services/categoriesService';
-import userService from '@/services/userService';
+// import userService from '@/services/userService';
 import { useToast } from "vue-toastification";
 import { mapGetters } from 'vuex';
 
@@ -79,24 +79,32 @@ export default {
       try {
         const response = await categoriesService.getCategories()
         this.categories = response.data;
-        // console.log(response.data);
       } catch (error) {
         console.log('Erreur pendant la récupération des catégories : ' + error);
       }
     },
+    // async logout() {
+    //   try {
+    //     await userService.logout();
+    //     this.$store.commit('clearUser');
+    //     this.$store.commit('clearAdmin');
+    //     this.toast.success("Vous avez bien été déconnecté");
+    //     this.$router.push({ name: 'home' });
+    //   } catch (error) {
+    //     console.log('Erreur pendant la déconnexion : ', error);
+    //   }
+    // },
     async logout() {
       try {
-        await userService.logout();
-        this.$store.commit('clearUser');
-        this.$store.commit('clearAdmin');
+        await this.$store.dispatch('logout')
         this.toast.success("Vous avez bien été déconnecté");
         this.$router.push({ name: 'home' });
-      } catch (error) {
-        console.log('Erreur pendant la déconnexion : ', error);
+      } catch(error) {
+        console.log(error)
       }
     },
     checkCookie() {
-      const cookie = document.cookie.includes('BEARER');
+      const cookie = document.cookie.includes('CHECKER');
       console.log('Checked cookie : ' + cookie)
       if (!cookie && this.isLoggedIn) {
         this.toast.warning('Votre session a expiré, veuillez vous reconnecter');
@@ -109,7 +117,9 @@ export default {
   },
   created() {
     this.fetchCategories();
-    // this.checkCookie();
+  },
+  mounted() {
+    this.checkCookie();
   }
 }
 </script>

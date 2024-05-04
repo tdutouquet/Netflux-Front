@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Catégorie "{{ categories[0].name }}" ({{ movies.length }} films)</h1>
+            <h1 class="h1 my-5">Catégorie "{{ categories[0].name }}" ({{ movies.length }} {{ movies.length > 1 ? 'films' : 'film' }})</h1>
             <div class="row row-gap-3">
                 <div v-for="movie in movies" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">

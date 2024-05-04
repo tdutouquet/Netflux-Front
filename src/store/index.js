@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import userService from '@/services/userService'
 
 export default createStore({
   state: {
@@ -31,6 +32,17 @@ export default createStore({
     }
   },
   actions: {
+    async logout({commit}) {
+      try {
+        await userService.logout();
+        commit('clearUser');
+        commit('clearAdmin');
+        return true;
+      } catch (error) {
+        console.log('Erreur pendant la déconnexion : ', error);
+        throw error;
+      }
+    },
   },
   modules: {
   },
