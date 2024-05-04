@@ -10,6 +10,8 @@ Fortunately, if the Symfony fixtures have been injected into the database on the
 * Login : admin@localhost.com
 * Pass : admin
 
+If you stay inactive too long, the account will be automatically disconnected and you will have to login again.
+
 ## Notifications
 
 The front-end uses [Vue Toastification](https://github.com/Maronato/vue-toastification) for notifications. You may need to install it manually:

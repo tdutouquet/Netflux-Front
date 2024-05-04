@@ -2,9 +2,21 @@
     <main>
         <div class="container">
             <h1 class="h1 mt-5 mb-3 fw-bold">{{ movie.title }}</h1>
-            <div>
-                <span v-for="categ in movie.categories" :key="categ.id" class="badge bg-secondary mb-3 mx-1">{{
-                categ.name }}</span>
+            <div class="row d-flex justify-content-between">
+                <div class="col">
+                    <span v-for="categ in movie.categories" :key="categ.id" class="badge bg-secondary mb-3 mx-1">{{ categ.name }}</span>
+                </div>
+                <div class="col text-end">
+                    {{ numberOfLikes }} {{ numberOfLikes > 1 ? 'likes' : 'like' }}
+                    <span v-if="isLoggedIn"> -
+                        <i v-if="isLiked" @click="removeLike" role="button" class="bi bi-hand-thumbs-up-fill text-primary pe-auto">
+                            Vous aimez ce film
+                        </i>
+                        <i v-else @click="submitLike" role="button" class="bi bi-hand-thumbs-up pe-auto">
+                            Liker
+                        </i>
+                    </span>
+                </div>
             </div>
             <figure>
                 <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover rounded" :alt="movie.title"
@@ -43,6 +55,7 @@
 <script>
 import moviesService from '@/services/moviesService';
 import commentsService from '@/services/commentsService';
+import likesService from '@/services/likesService';
 import { useToast } from "vue-toastification";
 import { mapGetters } from 'vuex';
 
@@ -52,8 +65,14 @@ export default {
             movieId: null,
             movie: [],
             numberOfComments: 0,
+            numberOfLikes: 0,
+            isLiked: false,
             newComment: {
                 content: 'Ceci est un exemple de commentaire, prêt à être envoyé ;)',
+                userEmail: '',
+                movieId: this.movieId,
+            },
+            newLike: {
                 userEmail: '',
                 movieId: this.movieId,
             }
@@ -69,6 +88,8 @@ export default {
                 const response = await moviesService.getMovie(id)
                 this.movie = response.data;
                 this.numberOfComments = this.movie.comments.length;
+                this.numberOfLikes = this.movie.likes.length;
+                this.checkLikeStatus();
             } catch (error) {
                 console.log('Erreur pendant la récupération du film : ' + error);
             }
@@ -86,6 +107,41 @@ export default {
             } catch (error) {
                 this.toast.error('Erreur pendant l\'envoi du commentaire : ' + error);
                 console.log('Erreur pendant l\'envoi du commentaire : ' + error);
+            }
+        },
+        checkLikeStatus() {
+            this.isLiked = this.movie.likes.some(
+                like => like.user.email === this.$store.state.userEmail
+            );
+        },
+        async submitLike() {
+            try {
+                this.newLike.userEmail = this.$store.state.userEmail;
+                this.newLike.movieId = this.movieId;
+
+                await likesService.addLike(this.newLike);
+                
+                this.toast.success("Like ajouté avec succès");
+                this.fetchMovie(this.movieId);
+            } catch (error) {
+                this.toast.error('Erreur pendant l\'envoi du like :' + error);
+                console.log('Erreur pendant l\'envoi du like :' + error);
+            }
+        },
+        async removeLike() {
+            try {
+                if (confirm('Êtes-vous sûr de vouloir retirer votre like?')) {
+                    let existingLike = this.movie.likes.find(
+                        like => like.user.email === this.$store.state.userEmail
+                    );
+                    
+                    console.log(existingLike)
+                    await likesService.removeLike(existingLike.id);
+                    this.toast.success("Like supprimé avec succès");
+                    this.fetchMovie(this.movieId);
+                }
+            } catch(error) {
+                console.log('Erreur pendant la suppression du like :'+ error);
             }
         },
         generateImgUrl(movie) {

@@ -69,7 +69,7 @@ export default {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce commentaire ?")) {
                 commentsService.deleteComment(id)
                     .then(() => {
-                        this.toast.success("Commentaire supprimée");
+                        this.toast.success("Commentaire supprimé");
                         this.fetchComments()
                     })
                     .catch((error) => {

@@ -86,6 +86,8 @@ export default {
                 this.newMovie.categories.push(this.cat2);
             }
             
+            this.cat2 = 50;
+            this.newMovie.categories.push(this.cat2);
             moviesService.addMovie(this.newMovie)
                 .then(() => {
                     this.toast.success("Film ajouté avec succès");

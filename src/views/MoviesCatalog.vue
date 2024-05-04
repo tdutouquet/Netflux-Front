@@ -8,7 +8,10 @@
             </form>
             <div class="row row-gap-3">
                 <div v-for="movie in filteredMovies" :key="movie.id" class="col">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card position-relative" style="width: 18rem;">
+                        <span class="position-absolute end-0 badge text-bg-light mt-2 me-2">
+                            {{ movie.likes.length }} {{ movie.likes.length > 1 ? 'likes' : 'like' }}
+                        </span>
                         <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }">
                             <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title"
                                 style="height: 200px;">

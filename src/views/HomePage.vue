@@ -6,7 +6,7 @@
                 <div class="container">
                     <h1 class="display-4 fw-bold">{{ siteName }}</h1>
                     <p class="lead">Un catalogue de films à déguster avec de déclicieux popcorns !</p>
-                    <router-link :to="{ name: 'register' }" class="btn btn-primary btn-lg p-3 mt-3 fw-bold">Je
+                    <router-link v-if="!isLoggedIn" :to="{ name: 'register' }" class="btn btn-primary btn-lg p-3 mt-3 fw-bold">Je
                         m'inscris</router-link>
                 </div>
             </div>
@@ -16,6 +16,9 @@
             <div class="row row-gap-3">
                 <div v-for="movie in movies.slice(0, 3)" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
+                        <span class="position-absolute end-0 badge text-bg-light mt-2 me-2">
+                            {{ movie.likes.length }} {{ movie.likes.length > 1 ? 'likes' : 'like' }}
+                        </span>
                         <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }">
                             <img :src="generateImgUrl(movie)" class="card-img-top object-fit-cover" :alt="movie.title"
                                 style="height: 200px;">
@@ -62,7 +65,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(['siteName'])
+        ...mapGetters(['siteName', 'isLoggedIn'])
     },
     created() {
         this.fetchMovies();

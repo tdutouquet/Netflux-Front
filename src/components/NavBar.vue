@@ -97,10 +97,10 @@ export default {
     },
     checkCookie() {
       const cookie = document.cookie.includes('BEARER');
-      console.log('Checked cookie')
+      console.log('Checked cookie : ' + cookie)
       if (!cookie && this.isLoggedIn) {
         this.toast.warning('Votre session a expiré, veuillez vous reconnecter');
-        this.logout();
+        setTimeout(() => this.logout(), 2000);
       }
     }
   },
@@ -109,7 +109,7 @@ export default {
   },
   created() {
     this.fetchCategories();
-    this.checkCookie();
+    // this.checkCookie();
   }
 }
 </script>

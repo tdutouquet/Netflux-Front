@@ -16,6 +16,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Titre</th>
                             <th scope="col">Catégories</th>
+                            <th scope="col">Commentaires</th>
+                            <th scope="col">Likes</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -29,6 +31,8 @@
                                     {{ categ.name }}
                                 </span>
                             </td>
+                            <td>{{ movie.comments.length }}</td>
+                            <td>{{ movie.likes.length }}</td>
                             <td>
                                 <RouterLink :to="{ name: 'adminMovieEdit', params: { id: movie.id } }" class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>
                                 <button @click="deleteMovie(movie.id)" class="btn btn-danger btn-sm mx-2 btn-delete">Supprimer</button>
@@ -65,7 +69,7 @@ export default {
             try {
                 const response = await moviesService.getMovies()
                 this.movies = response.data;
-                // console.log(this.movies);
+                console.log(this.movies);
             } catch (error) {
                 console.log('Error while fetching movies: ' + error);
             }
