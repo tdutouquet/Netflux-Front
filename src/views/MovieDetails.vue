@@ -9,12 +9,13 @@
                 <div class="col text-end">
                     {{ numberOfLikes }} {{ numberOfLikes > 1 ? 'likes' : 'like' }}
                     <span v-if="isLoggedIn"> -
-                        <i v-if="isLiked" @click="removeLike" role="button" class="bi bi-hand-thumbs-up-fill text-primary pe-auto">
+                        <i v-if="isLiked" @click="removeLike" role="button" class="bi bi-hand-thumbs-up pe-auto">
                             Vous aimez ce film
                         </i>
-                        <i v-else @click="submitLike" role="button" class="bi bi-hand-thumbs-up pe-auto">
-                            Liker
+                        <i v-else @click="submitLike" role="button" class="bi bi-hand-thumbs-up-fill text-primary pe-auto">
+                            Liker ce film
                         </i>
+                        <!-- bi bi-hand-thumbs-up pe-auto -->
                     </span>
                 </div>
             </div>
@@ -46,6 +47,18 @@
                 <div v-for="comment in movie.comments" :key="comment.id" class="card p-3 mb-3 bg-light">
                     <h4 class="h5">Commentaire de "{{ truncate(comment.user.email) }}"</h4>
                     <p>{{ comment.content }}</p>
+                    <div class="d-flex justify-content-between fst-italic">
+                        <div>Laissé le {{ formatDate(comment.createdAt) }}</div>
+                        <div>
+                            <span v-if="isLoggedIn && comment.commentLikes.some(commentLike => commentLike.user.email === this.$store.state.userEmail)">
+                                <i @click="removeCommentLike(comment.id)" role="button" class="bi bi-x-circle"></i>
+                            </span>
+                            <span v-else-if="isLoggedIn">
+                                <i @click="submitCommentLike(comment.id)" role="button" class="bi bi-plus-circle-fill text-primary"></i>
+                            </span>
+                            <span class="mx-2">{{ comment.commentLikes.length }} {{ comment.commentLikes.length > 1 ? 'upvotes' : 'upvote' }}</span>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -66,15 +79,20 @@ export default {
             movie: [],
             numberOfComments: 0,
             numberOfLikes: 0,
-            isLiked: false,
             newComment: {
                 content: 'Ceci est un exemple de commentaire, prêt à être envoyé ;)',
                 userEmail: '',
                 movieId: this.movieId,
             },
+            isLiked: false,
             newLike: {
                 userEmail: '',
                 movieId: this.movieId,
+            },
+            isUpvoted: false,
+            newCommentLike: {
+                userEmail: '',
+                commentId: null,
             }
         }
     },
@@ -126,6 +144,7 @@ export default {
             } catch (error) {
                 this.toast.error('Erreur pendant l\'envoi du like :' + error);
                 console.log('Erreur pendant l\'envoi du like :' + error);
+                console.log(this.newLike);
             }
         },
         async removeLike() {
@@ -135,13 +154,43 @@ export default {
                         like => like.user.email === this.$store.state.userEmail
                     );
                     
-                    console.log(existingLike)
                     await likesService.removeLike(existingLike.id);
-                    this.toast.success("Like supprimé avec succès");
+                    this.toast.success("Like supprimé");
                     this.fetchMovie(this.movieId);
                 }
             } catch(error) {
                 console.log('Erreur pendant la suppression du like :'+ error);
+            }
+        },
+        async submitCommentLike(commentId) {
+            try {
+                this.newCommentLike.userEmail = this.$store.state.userEmail;
+                this.newCommentLike.commentId = commentId;
+
+                await likesService.addCommentLike(this.newCommentLike);
+                this.toast.success("Upvote ajouté");
+                this.fetchMovie(this.movieId);
+            } catch (error) {
+                this.toast.error('Erreur pendant l\'envoi de l\'upvote :' + error);
+                console.log('Erreur pendant l\'envoi de l\'upvote :' + error);
+                console.log(this.newCommentLike);
+            }
+        },
+        async removeCommentLike(commentId) {
+            try {
+                if (confirm('Êtes-vous sûr de vouloir retirer votre upvote?')) {
+                    let clickedComment = this.movie.comments.find(comment => comment.id === commentId);
+                    let existingCommentLike = clickedComment.commentLikes.find(
+                        commentLike => commentLike.user.email === this.$store.state.userEmail
+                    );
+                    
+                    console.log(existingCommentLike)
+                    await likesService.removeCommentLike(existingCommentLike.id);
+                    this.toast.success("Upvote retiré");
+                    this.fetchMovie(this.movieId);
+                }
+            } catch(error) {
+                console.log('Erreur pendant la suppression de l\'upvote :'+ error);
             }
         },
         generateImgUrl(movie) {
@@ -149,6 +198,14 @@ export default {
         },
         truncate(email) {
             return email.split('@')[0];
+        },
+        formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
         }
     },
     computed: {

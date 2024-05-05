@@ -15,5 +15,11 @@ export default {
     },
     removeLike(id) {
         return client.delete(`/likes/${id}`);
+    },
+    addCommentLike(likeData) {
+        return client.post('/comment-likes', likeData);
+    },
+    removeCommentLike(id) {
+        return client.delete(`/comment-likes/${id}`);
     }
 }
