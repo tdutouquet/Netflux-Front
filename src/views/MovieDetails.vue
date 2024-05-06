@@ -15,7 +15,6 @@
                         <i v-else @click="submitLike" role="button" class="bi bi-hand-thumbs-up-fill text-primary pe-auto">
                             Liker ce film
                         </i>
-                        <!-- bi bi-hand-thumbs-up pe-auto -->
                     </span>
                 </div>
             </div>
@@ -27,7 +26,7 @@
             <p><strong>Date de sortie : </strong>{{ movie.date }}</p>
             <p><strong>Réalisateur : </strong>{{ movie.director }}</p>
         </div>
-        <hr class="mt-5 mb-5">
+        <hr class="my-5">
         <div class="container">
             <section>
                 <h2 class="fw-bold">Avis ({{ numberOfComments }})</h2>
@@ -41,9 +40,9 @@
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                 <p v-else>
-                    <RouterLink :to="{ name: login }">Connectez-vous</RouterLink> pour pouvoir ajouter un commentaire.
+                    <RouterLink :to="{ name: 'login' }">Connectez-vous</RouterLink> pour pouvoir ajouter un commentaire.
                 </p>
-                <h3 class="h4 mt-5 mb-3">Commentaires d'autres utilisateurs</h3>
+                <h3 v-if="numberOfComments > 0" class="h4 mt-5 mb-3">Commentaires d'autres utilisateurs</h3>
                 <div v-for="comment in movie.comments" :key="comment.id" class="card p-3 mb-3 bg-light">
                     <h4 class="h5">Commentaire de "{{ truncate(comment.user.email) }}"</h4>
                     <p>{{ comment.content }}</p>

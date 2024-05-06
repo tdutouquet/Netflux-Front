@@ -100,6 +100,7 @@ export default {
                 })
         },
         submitMovie() {
+            this.newMovie.categories = [];
             this.newMovie.categories.push(this.cat1);
             if (this.cat2 !== 0 && this.cat2 !== this.cat1) {
                 this.newMovie.categories.push(this.cat2);

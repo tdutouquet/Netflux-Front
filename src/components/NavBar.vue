@@ -38,13 +38,18 @@
             <span>{{ userEmail }}</span>
           </li>
           <li v-if="isLoggedIn && this.$store.state.isAdmin" class="nav-item">
-            <router-link :to="{ name: 'adminDashboard' }" class="btn btn-secondary">Admin</router-link>
+            <router-link :to="{ name: 'adminDashboard' }" class="btn btn-secondary">
+              <i class="bi bi-gear-fill me-2"></i>
+              Admin
+            </router-link>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/login" class="btn btn-link text-decoration-none text-light">Connexion</router-link>
           </li>
           <li v-if="isLoggedIn" class="nav-item">
-            <a @click="logout" class="btn btn-link text-decoration-none text-light">Déconnexion</a>
+            <a @click="logout" class="btn btn-link text-decoration-none text-light">
+              <i class="bi bi-box-arrow-right mx-2" title="Déconnexion"></i>
+            </a>
           </li>
           <li v-if="!isLoggedIn" class="nav-item">
             <router-link to="/register" class="btn btn-primary">Inscription</router-link>
@@ -98,7 +103,7 @@ export default {
       try {
         await this.$store.dispatch('logout')
         this.toast.success("Vous avez bien été déconnecté");
-        this.$router.push({ name: 'home' });
+        this.$router.push({ name: 'login' });
       } catch(error) {
         console.log(error)
       }

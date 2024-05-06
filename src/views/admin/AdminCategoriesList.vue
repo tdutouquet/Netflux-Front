@@ -12,6 +12,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nom</th>
+                            <th scope="col">Films</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -19,6 +20,7 @@
                         <tr v-for="category in categories" :key="category.id">
                             <th scope="row">{{ category.id }}</th>
                             <td>{{ category.name }}</td>
+                            <td>{{ category.movies.length }}</td>
                             <td>
                                 <RouterLink :to="{ name: 'adminCategoryEdit', params: { id: category.id } }"
                                     class="btn btn-dark btn-sm mx-2">Modifier</RouterLink>

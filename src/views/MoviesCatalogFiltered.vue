@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container">
-            <h1 class="h1 my-5">Catégorie "{{ categories[0].name }}" ({{ movies.length }} {{ movies.length > 1 ? 'films' : 'film' }})</h1>
+            <h1 class="h1 my-5">Catégorie "{{ category.name }}" ({{ movies.length }} {{ movies.length > 1 ? 'films' : 'film' }})</h1>
             <div class="row row-gap-3">
                 <div v-for="movie in movies" :key="movie.id" class="col">
                     <div class="card" style="width: 18rem;">
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import moviesService from '@/services/moviesService';
 import categoriesService from '@/services/categoriesService';
 
 export default {
@@ -35,51 +34,38 @@ export default {
         return {
             movies: [],
             categId: null,
-            categories: [{'name': '...'}],
+            category: {},
         }
     },
     methods: {
-        async fetchMovies(id) {
+        async fetchCategory(id) {
             try {
-                const response = await moviesService.getMovies()
-                this.movies = response.data;
-
-                if (id) {
-                    this.movies = this.movies.filter(
-                        movie => movie.categories.find(categ => categ.id === id)
-                    );
-                }
+                const response = await categoriesService.getCategory(id)
+                this.category = response.data;
+                this.movies = this.category.movies;
             } catch (error) {
-                console.log('Erreur pendant la récupération des films : ' + error);
+                console.log('Erreur pendant la récupération de la catégorie : ' + error);
             }
         },
         generateImgUrl(movie) {
             return `https://source.unsplash.com/random/?movie&${movie.title}`;
         },
-        async fetchCategories(id) {
-            try {
-                const response = await categoriesService.getCategories()
-                this.categories = response.data;
-                
-                if (id) {
-                    this.categories = this.categories.filter(categ => categ.id === id);
-                }
-                console.log(this.categories);
-            } catch (error) {
-                console.log('Erreur pendant la récupération des catégories : ' + error);
-            }
+    },
+    watch: {
+        $route(to) {
+            this.categId = parseInt(to.params.id);
+            this.fetchCategory(this.categId);
         }
     },
     created() {
         this.categId = parseInt(this.$route.params.id);
-        this.fetchMovies(this.categId);
-        this.fetchCategories(this.categId);
+        this.fetchCategory(this.categId);
     },
-    beforeRouteUpdate() {
-        this.categId = parseInt(this.$route.params.id);
-        this.fetchMovies(this.categId);
-        this.fetchCategories(this.categId);
-    }
+    // mounted() {
+    //     this.categId = parseInt(this.$route.params.id);
+    //     console.log(this.categId)
+    //     this.fetchCategory(this.categId);
+    // }
 }
 </script>
 
